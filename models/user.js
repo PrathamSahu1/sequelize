@@ -1,7 +1,6 @@
-const sequelize = require('./index')
-const { DataTypes } = require('sequelize');
 
-const User = sequelize.define(
+module.exports = (sequelize,DataTypes) => {
+  const User = sequelize.define(
     'User',
     {
       // Model attributes are defined here
@@ -23,4 +22,5 @@ const User = sequelize.define(
     },
   );
 
-  module.exports = User;
+  return User;
+}
