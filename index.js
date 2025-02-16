@@ -2,20 +2,20 @@ const express = require('express')
 // const User = require('./models/user')
 // const Contact = require('./models/contact')
 require('./models/index')
-const {addUser} = require('./controllers/userController')
+
+const userHandler = require('./routes/user.routes')
 
 const app = express()
-
-// app.use(express.json())
-
-
 const port = 3000
+
+app.use(express.json())
+app.use('/api/user',userHandler)
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/add', addUser)
 
 
 // User.sync({ force: true });
