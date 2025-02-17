@@ -15,6 +15,6 @@ const sequelize = new Sequelize('demoDB', 'postgres', 'Acrobat@1', {
   const User = require('./user')(sequelize,DataTypes)
   const Contact = require('./contact')(sequelize,DataTypes)
 
- sequelize.sync({force:false})
+  sequelize.sync({force:false})
 
   module.exports = {sequelize,User,Contact};

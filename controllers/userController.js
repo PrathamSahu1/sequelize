@@ -1,4 +1,5 @@
 const {User} = require('../models/index')
+const {Op} = require('sequelize')
 
 const addUser = async (req,res) => {
   
@@ -31,6 +32,13 @@ const postUser = async (req,res) => {
   
 }
 
+const postAllUsers = async (req,res) => {
+    const postData = req.body;
+    const data = await User.bulkCreate(postData)
+    res.status(200).json({data:data})
+  
+}
+
 const updateUser = async (req,res) => {
   const updatedData = req.body;
   const data = await User.update(updatedData,{
@@ -50,7 +58,54 @@ const deleteUser = async (req,res) => {
   res.status(200).json({data:data})
 }
 
+// get count of total records from DB
+const countUsers = async (req,res) => {
+  const count = await User.count('id')
+  res.status(200).json({data:count})
+}
+
+// get records excluding specific id
+const userExcludingId = async (req,res) => {
+    const user = await User.findAll({
+        where:{
+            id:{
+               [Op.ne]:req.params.id
+        }
+    }
+    })
+    res.status(200).json({data:user})
+  }
+
+// fetch top records
+const topRecords = async (req,res) => {
+    const user = await User.findAll({
+        limit: 2
+    })
+    res.status(200).json({data:user})
+  }
+
+  // offset
+  const skipTopRecords = async (req,res) => {
+    const user = await User.findAll({
+        offset: 2
+    })
+    res.status(200).json({data:user})
+  }
+
+  //salary between certain range
+  const recordsInRange = async (req,res) => {
+    const {firstSalary,secondSalary} = req.query;
+    const user = await User.findAll({
+        where:{
+            salary:{
+                [Op.between]: [firstSalary,secondSalary]
+            }
+        }
+    })
+    res.status(200).json({data:user})
+  }
+  
 
 
 
-module.exports = {addUser,getUsers,getUser,postUser,updateUser,deleteUser};
+module.exports = {addUser,getUsers,getUser,postUser,updateUser,deleteUser,countUsers,userExcludingId,postAllUsers,topRecords,skipTopRecords,recordsInRange};

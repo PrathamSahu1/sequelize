@@ -12,6 +12,13 @@ module.exports = (sequelize,DataTypes) => {
         type: DataTypes.STRING,
         // allowNull defaults to true
       },
+      salary: {
+        type: DataTypes.INTEGER,
+        defaultValue:0,
+      },
+      department: {
+        type: DataTypes.STRING
+      }
     },
     {
       // Other model options go here
